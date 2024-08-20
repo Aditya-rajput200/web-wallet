@@ -5,6 +5,9 @@ import { mnemonicToSeed } from 'bip39';
 function Eth({ mnemonic }) {
   const [wallets, setWallets] = useState([]);
   const [index, setIndex] = useState(0);
+  
+
+ 
 
   const generateEthWallet = async () => {
     if (!mnemonic) {
@@ -37,31 +40,46 @@ function Eth({ mnemonic }) {
   };
 
   return (
-    <div className="p-6">
-      <div className="text-2xl font-bold mb-4">Ethereum Block</div>
-      <button
-        onClick={generateEthWallet}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
-      >
-        Generate
-      </button>
+   
+      <div className="p-6 min-h-screen bg-white dark:bg-gray-900 dark:text-white">
+        <div className="flex justify-between items-center mb-4">
+          <div className="text-2xl font-bold">Ethereum Block</div>
+        
+        </div>
 
-      <div className="mt-6 space-y-4">
-        {wallets.map((wallet, idx) => (
-          <div key={idx} className="p-4 border border-gray-200 rounded-lg bg-gray-50 shadow-sm">
-            <div className="mb-2">
-              <span className="font-semibold">Address:</span> {wallet.address}
+        {mnemonic ? (
+          <>
+            <button
+              onClick={generateEthWallet}
+              className="bg-blue-500 dark:bg-blue-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 dark:hover:bg-blue-800"
+            >
+              Generate
+            </button>
+
+            <div className="mt-6 space-y-4">
+              {wallets.map((wallet, idx) => (
+                <div key={idx} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm">
+                  <div className="mb-2">
+                    <span className="font-semibold">Address:</span> {wallet.address}
+                  </div>
+                  <div className="mb-2">
+                    <span className="font-semibold">Private Key:</span> {wallet.privateKey}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Public Key:</span> {wallet.publicKey}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="mb-2">
-              <span className="font-semibold">Private Key:</span> {wallet.privateKey}
-            </div>
-            <div>
-              <span className="font-semibold">Public Key:</span> {wallet.publicKey}
-            </div>
+          </>
+        ) : (
+          <div className="text-center text-gray-600 dark:text-gray-400">
+            <p className="text-xl mb-4">No mnemonic provided</p>
+            <p>Please provide a mnemonic phrase to generate Ethereum wallets.</p>
           </div>
-        ))}
+        )}
       </div>
-    </div>
+   
   );
 }
 
