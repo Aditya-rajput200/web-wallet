@@ -5,7 +5,6 @@ import { useEffect, useState, useContext } from 'react';
 import { WalletContext } from '../../context/WalletContext';
 import { JsonRpcProvider, formatEther } from 'ethers';
 
-
 export default function WalletDetails() {
   const router = useRouter();
   const { walletinfo } = useContext(WalletContext);
@@ -28,32 +27,34 @@ export default function WalletDetails() {
   }, [walletinfo]);
 
   if (!walletinfo) {
-   
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="p-6 min-h-screen bg-white dark:bg-gray-900 dark:text-white">
-      <h1 className="text-2xl font-bold mb-4">Wallet Details</h1>
-      <div className="mb-4">
-        <strong>Wallet No:</strong> {walletinfo.walletNo}
+    <div className="p-4 sm:p-6 min-h-screen bg-white dark:bg-gray-900 dark:text-white">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4">Wallet Details</h1>
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <strong className="text-lg sm:text-xl">Wallet No:</strong>
+          <span className="text-gray-700 dark:text-gray-300">{walletinfo.walletNo}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <strong className="text-lg sm:text-xl">Address:</strong>
+          <span className="text-gray-700 dark:text-gray-300">{walletinfo.address}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <strong className="text-lg sm:text-xl">Balance:</strong>
+          <span className="text-gray-700 dark:text-gray-300">{balance !== null ? `${balance} ETH` : 'Loading...'}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <strong className="text-lg sm:text-xl">Private Key:</strong>
+          <span className="text-gray-700 dark:text-gray-300 break-all">{walletinfo.privateKey}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <strong className="text-lg sm:text-xl">Public Key:</strong>
+          <span className="text-gray-700 dark:text-gray-300 break-all">{walletinfo.publicKey}</span>
+        </div>
       </div>
-      <div className="mb-4">
-        <strong>Address:</strong> {walletinfo.address}
-      </div>
-      <div className="mb-4">
-        <strong>Balance:</strong> {balance !== null ? `${balance} ETH` : 'Loading...'} 
-       
-      </div>
-      <div className="mb-4">
-        <strong>Private Key:</strong> {walletinfo.privateKey}
-      </div>
-      <div className="mb-4">
-        <strong>Public Key:</strong> {walletinfo.publicKey}
-      </div>
-
-
-        
     </div>
   );
 }
