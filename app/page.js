@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { generateMnemonic } from 'bip39';
-import Eth from '@/components/Eth';
-import DarkModeToggle from '@/components/Darktogel';
+import Eth from './components/Eth';
+import DarkModeToggle from '@/app/components/Darktogel';
+import { toast } from 'sonner';
 
 function Page() {
   const [mnemonic, setMnemonic] = useState("");
@@ -12,10 +13,22 @@ function Page() {
     const mnemonic = generateMnemonic();
     setMnemonic(mnemonic);
     console.log(mnemonic);
+    toast('Memonic is Genrated!', {
+      position: 'top-right',
+      duration: 2000,
+      type: 'success',
+      richColors: true
+    });
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(mnemonic);
+    toast('Copied to the clipboard!', {
+      position: 'top-right',
+      duration: 2000,
+      type: 'success',
+      richColors: true
+    });
   };
 
   const mnemonicWords = mnemonic.split(' ');
@@ -37,7 +50,7 @@ function Page() {
       <DarkModeToggle/>
 
       <div className="mt-6">
-        <label className="text-lg font-semibold mb-2 block">Your Mnemonic Seed</label>
+        <label className="text-4xl font-semibold  mb-2 block">Your Mnemonic Seed</label>
         <div
           className={`relative bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-4 shadow-md ${
             mnemonic ? 'cursor-pointer' : ''
@@ -45,11 +58,11 @@ function Page() {
           onClick={mnemonic ? copyToClipboard : undefined}
         >
           {mnemonic ? (
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               {mnemonicWords.map((word, index) => (
                 <div
                   key={index}
-                  className="bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-gray-700 dark:text-gray-300"
+                  className="bg-gray-200 text-center dark:hover:bg-slate-500 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg w-64 py-4 text-gray-700 dark:text-gray-300"
                 >
                   {word}
                 </div>
@@ -73,7 +86,7 @@ function Page() {
           Generate Seed
         </button>
       </div>
-
+  
       <Eth mnemonic={mnemonic} />
     </div>
   );
