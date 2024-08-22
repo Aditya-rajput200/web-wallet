@@ -5,9 +5,15 @@ import { generateMnemonic } from 'bip39';
 import Eth from './components/Eth';
 import DarkModeToggle from '@/app/components/Darktogel';
 import { toast } from 'sonner';
+import Sol from './components/Sol';
 
 function Page() {
+  const [isSol, setIsSol] = useState(false);
   const [mnemonic, setMnemonic] = useState("");
+
+  const toggleSol = () => {
+    setIsSol(!isSol);
+  };
 
   const generateSeed = async () => {
     const mnemonic = generateMnemonic();
@@ -41,7 +47,7 @@ function Page() {
 
       <div className="flex flex-col sm:flex-row sm:justify-center items-center mt-4">
         <span className="text-lg font-semibold mb-2 sm:mb-0 sm:mr-2">Select the Coin</span>
-        <select className="border border-gray-500 dark:border-gray-600 rounded p-2 shadow-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+        <select  className="border border-gray-500 dark:border-gray-600 rounded p-2 shadow-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"   onChange={toggleSol}>
           <option value="eth">Eth</option>
           <option value="sol">Sol</option>
         </select>
@@ -87,7 +93,17 @@ function Page() {
         </button>
       </div>
 
-      <Eth mnemonic={mnemonic} />
+
+
+      {
+        isSol? (
+          <Sol mnemonic={mnemonic} />
+        ) : (
+          <Eth mnemonic={mnemonic} />
+        )
+      }
+
+   
     </div>
   );
 }
